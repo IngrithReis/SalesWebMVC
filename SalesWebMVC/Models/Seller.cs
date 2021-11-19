@@ -16,6 +16,15 @@ namespace SalesWebMVC.Models
         public Seller()
         {
         }
+        public Seller( string name, string email, DateTime birthDate, double baseSalary, Departament departament)
+        {
+           
+            Name = name;
+            Email = email;
+            BirthDate = birthDate;
+            BaseSalary = baseSalary;
+            Departament = departament;
+        }
 
         public Seller(int id, string name, string email, DateTime birthDate, double baseSalary, Departament departament)
         {
