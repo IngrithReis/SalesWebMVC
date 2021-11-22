@@ -25,6 +25,7 @@ namespace SalesWebMVC.Controllers
             return View();
 
         }
+        
 
         public IActionResult Index()
         {

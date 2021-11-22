@@ -40,7 +40,7 @@ namespace SalesWebMVC
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                seedingService.Seed();
+                seedingService.Seed();//popular base de dados se estiver em ambiente de desenvolvimento
             }
             else
             {
