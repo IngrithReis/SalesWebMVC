@@ -1,4 +1,5 @@
-﻿using SalesWebMVC.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SalesWebMVC.Data;
 using SalesWebMVC.Models;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace SalesWebMVC.Services
         public Seller FindById(int id)
         {
             
-            return _contex.Seller.FirstOrDefault(x => x.Id == id);
+            return _contex.Seller.Include(obj => obj.Departament).FirstOrDefault(x => x.Id == id);
         }
         public void Insert(Seller seller)
         {

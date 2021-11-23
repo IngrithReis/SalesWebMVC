@@ -1,0 +1,50 @@
+﻿@model SalesWebMVC.Models.Seller
+@{
+    ViewData["Title"] = "Dados do vendedor";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr/>
+<div>
+    <section class="landing">
+        <div class="container">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.BirthDate)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.BirthDate)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.BaseSalary)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.BaseSalary)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Departament)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Departament.Name)
+                </dd>
+            </dl>
+        </div>
+    </section>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-light">Editar</a>
+    <a asp-action="Index" class="btn btn-light">Retornar</a>
+</div>
