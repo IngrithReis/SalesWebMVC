@@ -19,12 +19,24 @@ namespace SalesWebMVC.Services
         {
             return _contex.Seller.ToList();
         }
+        public Seller FindById(int id)
+        {
+            
+            return _contex.Seller.FirstOrDefault(x => x.Id == id);
+        }
         public void Insert(Seller seller)
         {
-            seller.Departament = _contex.Departament.First();
+            
             _contex.Add(seller);
             _contex.SaveChanges();
             
         }
+        public void Remove(int id)
+        {
+            var delete = _contex.Seller.Find(id);
+            _contex.Seller.Remove(delete);
+            _contex.SaveChanges();
+        }
+
     }
 }
