@@ -16,39 +16,40 @@ namespace SalesWebMVC.Services
             _contex = contex;
         }
 
-        public List<Seller> FindAll()
+        public async Task<List<Seller>> FindAllAsync()
         {
-            return _contex.Seller.ToList();
+            return await _contex.Seller.ToListAsync();
         }
-        public Seller FindById(int id)
+        public async Task<Seller> FindByIdAsync(int id)
         {
             
-            return _contex.Seller.Include(obj => obj.Departament).FirstOrDefault(x => x.Id == id);
+            return await _contex.Seller.Include(obj => obj.Departament).FirstOrDefaultAsync(x => x.Id == id);
         }
-        public void Insert(Seller seller)
+        public async Task InsertAsync(Seller seller)
         {
             
             _contex.Add(seller);
-            _contex.SaveChanges();
+            await _contex.SaveChangesAsync();
             
         }
-        public void Remove(int id)
+        public async Task RemoveAsync(int id)
         {
-            var delete = _contex.Seller.Find(id);
+            var delete = await _contex.Seller.FindAsync(id);
             _contex.Seller.Remove(delete);
-            _contex.SaveChanges();
+           await  _contex.SaveChangesAsync();
         }
 
-        public void UpDate(Seller seller)
-        {
-            if(!_contex.Seller.Any(x => x.Id == seller.Id))
+        public async Task UpDateAsync(Seller seller)
+        {   
+             bool hasAny= await _contex.Seller.AnyAsync(x => x.Id == seller.Id);
+            if (!hasAny)
             {
                 throw new DllNotFoundException("Id não localizado");
             }
             try
             {
                 _contex.Update(seller);
-                _contex.SaveChanges();
+                await _contex.SaveChangesAsync();
             }
             catch(DbUpdateConcurrencyException e) // possível concorrência de excessão db
             {
