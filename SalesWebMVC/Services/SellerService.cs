@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalesWebMVC.Data;
 using SalesWebMVC.Models;
+using SalesWebMVC.Services.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,16 @@ namespace SalesWebMVC.Services
         }
         public async Task RemoveAsync(int id)
         {
-            var delete = await _contex.Seller.FindAsync(id);
-            _contex.Seller.Remove(delete);
-           await  _contex.SaveChangesAsync();
+            try
+            {
+                var delete = await _contex.Seller.FindAsync(id);
+                _contex.Seller.Remove(delete);
+                await _contex.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new IntegrityException("Vendedor não pode ser deletado pois possui vendas");
+            }
         }
 
         public async Task UpDateAsync(Seller seller)
