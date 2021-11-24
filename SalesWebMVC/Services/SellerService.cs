@@ -39,5 +39,22 @@ namespace SalesWebMVC.Services
             _contex.SaveChanges();
         }
 
+        public void UpDate(Seller seller)
+        {
+            if(!_contex.Seller.Any(x => x.Id == seller.Id))
+            {
+                throw new DllNotFoundException("Id não localizado");
+            }
+            try
+            {
+                _contex.Update(seller);
+                _contex.SaveChanges();
+            }
+            catch(DbUpdateConcurrencyException e) // possível concorrência de excessão db
+            {
+                throw new DbUpdateConcurrencyException(e.Message);
+            }
+        }
+
     }
 }
