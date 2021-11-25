@@ -9,22 +9,33 @@ namespace SalesWebMVC.Controllers
 {
     public class SalesRecordsController : Controller
     {
-        private readonly SellerService _sellerService;
-        private readonly DepartamentService _departamentService;
+        private readonly SalesRecordService _salesRecordService;
 
-        public SalesRecordsController(SellerService sellerService, DepartamentService departamentService)
+
+        public SalesRecordsController(SalesRecordService salesRecordService)
         {
-            _sellerService = sellerService;
-            _departamentService = departamentService;
+            _salesRecordService = salesRecordService;
         }
 
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult SimpleSearch()
+        public async Task<IActionResult> SimpleSearch(DateTime? dataMinima, DateTime? dataMaxima)
         {
-            return View();
+            if (!dataMinima.HasValue)
+            {
+                dataMinima = new DateTime(DateTime.Now.Year, 1, 1);
+            }
+            if (!dataMaxima.HasValue)
+            {
+                dataMaxima = DateTime.Now;
+            }
+            ViewData["minDate"] = dataMinima.Value.ToString("yyyy-MM-dd");
+            ViewData["maxDate"] = dataMaxima.Value.ToString("yyyy-MM-dd");
+
+            var result = await _salesRecordService.FindByDateAsync(dataMinima, dataMaxima);
+            return View(result);
         }
         public IActionResult GroupingSearch()
         {
